@@ -1,0 +1,166 @@
+<import name="movie-star" src="../Common/component/movie-star.ux"></import>
+<template>
+    <div class="container">
+        <image class="head-img" src="{{movie.movieImg}}" />
+        <div class="head-img-hover">
+            <text class="main-title">{{movie.title}}</text>
+            <text class="sub-title">{{movie.country}} · {{movie.year}}</text>
+            <div class="like">
+                <text class="highlight-font">{{movie.wishCount}}</text>
+                <text class="plain-font">人喜欢</text>
+                <text class="highlight-font">{{movie.commentCount}}</text>
+                <text class="plain-font">条评论</text>
+            </div>
+        </div>
+        <div class="summary">
+            <div class="original-title">
+                <text>{{movie.originalTitle}}</text>
+            </div>
+            <div class="flex-row">
+                <text class="mark">评分</text>
+                <movie-star stars="{{movie.stars}}" score="{{movie.score}}"></movie-star>
+            </div>
+            <div class="flex-row">
+                <text class="mark">导演</text>
+                <text>{{movie.directorName}}</text>
+            </div>
+            <div class="flex-row">
+                <text class="mark">影人</text>
+                <text>{{movie.casts}}</text>
+            </div>
+            <div class="flex-row">
+                <text class="mark">类型</text>
+                <text>{{movie.generes}}</text>
+            </div>
+        </div>
+        <div class="hr"></div>
+        <div class="synopsis">
+            <text class="synopsis-font">剧情简介</text>
+            <text class="summary-content">{{movie.summary}}</text>
+        </div>
+</template>
+
+<style>
+    text {
+        font-size: 24px;
+        color: #666666;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .head-img {
+        width: 100%;
+        height: 320px;
+    }
+
+    .head-img-hover {
+        width: 100%;
+        height: 320px;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-title {
+        font-size: 38px;
+        margin-top: 50px;
+        margin-left: 40px;
+    }
+
+    .sub-title {
+        font-size: 28px;
+        color: #999999;
+        margin-left: 40px;
+        margin-top: 30px;
+    }
+
+    .like {
+        display: flex;
+        flex-direction: row;
+        margin-top: 30px;
+        margin-left: 40px;
+    }
+
+    .highlight-font {
+        color: #f21146;
+        font-size: 22px;
+        margin-right: 10px;
+    }
+
+    .plain-font {
+        color: #666666;
+        font-size: 22px;
+        margin-right: 30px;
+    }
+
+    .summary {
+        display: flex;
+        flex-direction: column;
+        margin-left: 40px;
+        color: #777777;
+    }
+
+    .original-title {
+        color: #1f3463;
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
+
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+    }
+
+    .mark {
+        margin-right: 30px;
+        color: #999999;
+    }
+
+    .hr {
+        margin-top: 45px;
+        height: 2px;
+        width: 100%;
+        background-color: #d9d9d9;
+    }
+
+    .synopsis {
+        margin-left: 40px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .synopsis-font {
+        color: #999999;
+    }
+
+    .summary-content {
+        margin-top: 20px;
+        margin-right: 40px;
+        line-height: 40px;
+    }
+</style>
+
+<script>
+    import { Movie } from '../Common/class/Movie.js';
+    export default {
+        data: {
+            mID: '',
+            movie: {}
+        },
+
+        onInit() {
+            var url = this.$app.$def.gData.dbBaseUrl + "/v2/movie/subject/" + this.mID;
+            var movie = new Movie(url);
+            movie.getMovieData((movie) => {
+                this.movie = movie
+            })
+        }
+    }
+</script>

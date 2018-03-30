@@ -1,0 +1,48 @@
+<template>
+    <div class="stars-container">
+        <div class="stars">
+            <block for="{{stars}}">
+                <image if="{{$item === 1}}" src="/Common/images/icon/star.png"></image>
+                <image else src="/Common/images/icon/none-star.png"></image>
+            </block>
+        </div>
+        <text class="star-score">{{score}}</text>
+    </div>
+</template>
+
+<style>
+    .stars-container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .stars {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        height: 17px;
+        margin-right: 24px;
+        margin-top: 6px;
+    }
+
+    .stars image {
+        padding-left: 3px;
+        height: 17px;
+        width: 17px;
+    }
+
+    .star-score {
+        font-size: 24px;
+        color: #1f3463;
+    }
+</style>
+
+<script>
+    export default {
+        props: [
+            'stars',
+            'score'
+        ],
+    }
+</script>

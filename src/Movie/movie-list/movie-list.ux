@@ -1,0 +1,74 @@
+<import name="movie-box" src="../movie-box/movie-box.ux"></import>
+
+<template>
+    <div class="movie-list-container">
+        <div class="inner-container">
+            <div class="movie-head">
+                <text class="slogan">{{topic.categoryTitle}}</text>
+                <div class="more">
+                    <text class="more-text">更多</text>
+                    <image class="more-img" src="/Common/images/icon/arrow-right.png"></image>
+                </div>
+            </div>
+            <div class="movies-container">
+                <block for="{{topic.movies}}">
+                    <movie-box movie="{{$item}}"></movie-box>
+                </block>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+    .movie-list-container {
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: #ffffff;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-bottom: 20px;
+    }
+
+    .movie-head {
+        padding: 30px 30px 22px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .slogan {
+        font-size: 24px;
+    }
+
+    .more-text {
+        margin-right: 10px;
+        font-size: 24px;
+        color: #1f4ba5;
+    }
+
+    .more-img {
+        width: 9px;
+        height: 16px;
+        margin-top: 10px;
+    }
+
+    .movies-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0 30px 0;
+    }
+</style>
+
+<script>
+    export default {
+        props: [
+            'topic'
+        ],
+    }
+</script>
