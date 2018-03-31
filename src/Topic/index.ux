@@ -1,4 +1,4 @@
-<import name="movie-list" src="./movie-list/movie-list.ux"></import>
+<import name="movie-list" src="../Common/component/movie-list.ux"></import>
 
 <template>
   <div class="my-container">

@@ -172,7 +172,7 @@
 	  },
 	  routeMovie: function routeMovie() {
 	    _system2.default.push({
-	      uri: '/Movie'
+	      uri: '/Topic'
 	    });
 	  }
 	};

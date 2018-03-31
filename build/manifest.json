@@ -33,7 +33,7 @@
       "Home": {
         "component": "index"
       },
-      "Movie": {
+      "Topic": {
         "component": "index"
       },
       "Detail": {
@@ -53,8 +53,11 @@
         "titleBarText": "鸡毛窝",
         "menu": false
       },
-      "Movie": {
-        "titleBarText": "鸡毛窝-电影"
+      "Topic": {
+        "titleBarText": "电影专题"
+      },
+      "Detail": {
+        "titleBarText": "电影详情"
       },
       "About": {
         "menu": false

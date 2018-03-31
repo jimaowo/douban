@@ -1,4 +1,4 @@
-<import name="movie-star" src="../../Common/component/movie-star.ux"></import>
+<import name="movie-star" src="./movie-star.ux"></import>
 
 <template>
     <div class="movie-container" onclick="routeDetail">

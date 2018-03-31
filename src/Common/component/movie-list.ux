@@ -1,4 +1,4 @@
-<import name="movie-box" src="../movie-box/movie-box.ux"></import>
+<import name="movie-box" src="./movie-box.ux"></import>
 
 <template>
     <div class="movie-list-container">
