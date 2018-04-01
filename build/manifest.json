@@ -39,6 +39,9 @@
       "Detail": {
         "component": "index"
       },
+      "More": {
+        "component": "index"
+      },
       "About": {
         "component": "index"
       }

@@ -1,0 +1,103 @@
+<import name="movie-box" src="./movie-box.ux"></import>
+
+<template>
+    <list class="grid-container" onscrollbottom="loadMoreData">
+        <!-- 电影列表 -->
+        <block for="{{movieList}}">
+            <list-item type="movie" class="content-item">
+                <movie-box movie="{{$item}}"></movie-box>
+            </list-item>
+        </block>
+
+        <!-- 加载更多 -->
+        <list-item type="loadMore" class="load-more">
+            <progress if="{{hasMore}}" type="circular"></progress>
+            <text>{{tip}}</text>
+        </list-item>
+    </list>
+</template>
+
+<style>
+    .grid-container {
+        flex-direction: column;
+        columns: 3;
+        margin: 40px 0 0 25px;
+    }
+
+    .content-item {
+        margin-bottom: 40px;
+    }
+
+    .load-more {
+        column-span: 3;
+        justify-content: center;
+        padding: 30px 0 100px 0;
+    }
+</style>
+
+<script>
+    import util from '../../util.js';
+    import { Movie } from '../class/Movie.js';
+
+    export default {
+        props: [
+            'requestUrl'
+        ],
+        data: {
+            movieList: {},
+            totalCount: 0,
+            isEmpty: true,
+            hasMore: true,
+            tip: '加载中...',
+        },
+        onInit() {
+            var dataUrl = this.requestUrl + "?start=0&count=18"
+            util.http(dataUrl, this.processDoubanData.bind(this));
+        },
+
+        processDoubanData: function (moviesDouban) {
+            if (moviesDouban.subjects.length === 0) {
+                this.hasMore = false;
+                this.tip = '已经木有了 T.T';
+            }
+            var movies = [];
+            for (var idx in moviesDouban.subjects) {
+                var subject = moviesDouban.subjects[idx];
+                var title = subject.title;
+                if (title.length >= 6) {
+                    title = title.substring(0, 6) + "...";
+                }
+                var temp = {
+                    stars: (new Movie()).convertToStarsArray(subject.rating.stars),
+                    title: title,
+                    average: subject.rating.average,
+                    coverageUrl: subject.images.large,
+                    movieId: subject.id
+                }
+                movies.push(temp)
+            }
+            var totalMovies = {}
+
+            //如果要绑定新加载的数据，那么需要同旧有的数据合并在一起
+            if (!this.isEmpty) {
+                totalMovies = this.movieList.concat(movies);
+            }
+            else {
+                totalMovies = movies;
+                this.isEmpty = false;
+            }
+            this.movieList = totalMovies;
+            this.totalCount += 18;
+        },
+
+        //加载更多数据
+        loadMoreData: function () {
+            if (this.hasMore) {
+                var nextUrl = this.requestUrl + "?start=" + this.totalCount + "&count=18";
+                util.http(nextUrl, this.processDoubanData.bind(this))
+            } else {
+                this.tip = '木有了你还往下拉.. ←_←'
+            }
+        }
+    }
+</script>

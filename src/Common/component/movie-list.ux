@@ -5,7 +5,7 @@
         <div class="inner-container">
             <div class="movie-head">
                 <text class="slogan">{{topic.categoryTitle}}</text>
-                <div class="more">
+                <div class="more" onclick="routeMore">
                     <text class="more-text">更多</text>
                     <image class="more-img" src="/Common/images/icon/arrow-right.png"></image>
                 </div>
@@ -66,9 +66,17 @@
 </style>
 
 <script>
+    import router from '@system.router';
+
     export default {
         props: [
             'topic'
         ],
+        routeMore() {
+            router.push({
+                uri: '/More',
+                params: { category: this.topic.categoryTitle }
+            })
+        }
     }
 </script>

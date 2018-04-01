@@ -1,0 +1,42 @@
+<import name="movie-grid" src="../Common/component/movie-grid.ux"></import>
+
+<template>
+        <movie-grid request-url="{{requestUrl}}"></movie-grid>
+</template>
+
+<style>
+</style>
+
+<script>
+    import util from '../util.js';
+    import { Movie } from '../Common/class/Movie.js';
+
+    export default {
+        props: [
+            'category'
+        ],
+        data: {
+            movies: {},
+            requestUrl: "",
+        },
+
+        onInit() {
+            var category = this.category;
+            this.$page.setTitleBar({ text: category })
+            var dataUrl = "";
+            switch (category) {
+                case "正在热映":
+                    dataUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/in_theaters";
+                    break;
+                case "即将上映":
+                    dataUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/coming_soon";
+                    break;
+                case "豆瓣Top250":
+                    dataUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/top250";
+                    break;
+            }
+            this.requestUrl = dataUrl;
+        },
+
+    }
+</script>

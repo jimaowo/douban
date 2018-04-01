@@ -47,10 +47,10 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(27)
-	var $app_template$ = __webpack_require__(31)
-	var $app_style$ = __webpack_require__(32)
-	var $app_script$ = __webpack_require__(33)
+	__webpack_require__(16)
+	var $app_template$ = __webpack_require__(24)
+	var $app_style$ = __webpack_require__(25)
+	var $app_script$ = __webpack_require__(26)
 	
 	$app_define$('@app-component/index', [], function($app_require$, $app_exports$, $app_module$){
 	     $app_script$($app_module$, $app_exports$, $app_require$)
@@ -420,7 +420,25 @@
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */,
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(17)
+	var $app_template$ = __webpack_require__(21)
+	var $app_style$ = __webpack_require__(22)
+	var $app_script$ = __webpack_require__(23)
+	
+	$app_define$('@app-component/movie-grid', [], function($app_require$, $app_exports$, $app_module$){
+	     $app_script$($app_module$, $app_exports$, $app_require$)
+	     if ($app_exports$.__esModule && $app_exports$.default) {
+	            $app_module$.exports = $app_exports$.default
+	        }
+	     $app_module$.exports.template = $app_template$
+	     $app_module$.exports.style = $app_style$
+	})
+
+
+/***/ },
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -530,117 +548,64 @@
 	};}
 
 /***/ },
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(17)
-	var $app_template$ = __webpack_require__(28)
-	var $app_style$ = __webpack_require__(29)
-	var $app_script$ = __webpack_require__(30)
-	
-	$app_define$('@app-component/movie-list', [], function($app_require$, $app_exports$, $app_module$){
-	     $app_script$($app_module$, $app_exports$, $app_require$)
-	     if ($app_exports$.__esModule && $app_exports$.default) {
-	            $app_module$.exports = $app_exports$.default
-	        }
-	     $app_module$.exports.template = $app_template$
-	     $app_module$.exports.style = $app_style$
-	})
-
-
-/***/ },
-/* 28 */
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = {
-	  "type": "div",
+	  "type": "list",
 	  "attr": {},
 	  "classList": [
-	    "movie-list-container"
+	    "grid-container"
 	  ],
+	  "events": {
+	    "scrollbottom": "loadMoreData"
+	  },
 	  "children": [
 	    {
-	      "type": "div",
+	      "type": "block",
 	      "attr": {},
+	      "repeat": function () {return this.movieList},
+	      "children": [
+	        {
+	          "type": "list-item",
+	          "attr": {
+	            "type": "movie"
+	          },
+	          "classList": [
+	            "content-item"
+	          ],
+	          "children": [
+	            {
+	              "type": "movie-box",
+	              "attr": {
+	                "movie": function () {return this.$item}
+	              }
+	            }
+	          ]
+	        }
+	      ]
+	    },
+	    {
+	      "type": "list-item",
+	      "attr": {
+	        "type": "loadMore"
+	      },
 	      "classList": [
-	        "inner-container"
+	        "load-more"
 	      ],
 	      "children": [
 	        {
-	          "type": "div",
-	          "attr": {},
-	          "classList": [
-	            "movie-head"
-	          ],
-	          "children": [
-	            {
-	              "type": "text",
-	              "attr": {
-	                "value": function () {return this.topic.categoryTitle}
-	              },
-	              "classList": [
-	                "slogan"
-	              ]
-	            },
-	            {
-	              "type": "div",
-	              "attr": {},
-	              "classList": [
-	                "more"
-	              ],
-	              "events": {
-	                "click": "routeMore"
-	              },
-	              "children": [
-	                {
-	                  "type": "text",
-	                  "attr": {
-	                    "value": "更多"
-	                  },
-	                  "classList": [
-	                    "more-text"
-	                  ]
-	                },
-	                {
-	                  "type": "image",
-	                  "attr": {
-	                    "src": "/Common/images/icon/arrow-right.png"
-	                  },
-	                  "classList": [
-	                    "more-img"
-	                  ]
-	                }
-	              ]
-	            }
-	          ]
+	          "type": "progress",
+	          "attr": {
+	            "type": "circular"
+	          },
+	          "shown": function () {return this.hasMore}
 	        },
 	        {
-	          "type": "div",
-	          "attr": {},
-	          "classList": [
-	            "movies-container"
-	          ],
-	          "children": [
-	            {
-	              "type": "block",
-	              "attr": {},
-	              "repeat": function () {return this.topic.movies},
-	              "children": [
-	                {
-	                  "type": "movie-box",
-	                  "attr": {
-	                    "movie": function () {return this.$item}
-	                  }
-	                }
-	              ]
-	            }
-	          ]
+	          "type": "text",
+	          "attr": {
+	            "value": function () {return this.tip}
+	          }
 	        }
 	      ]
 	    }
@@ -648,58 +613,34 @@
 	}
 
 /***/ },
-/* 29 */
+/* 22 */
 /***/ function(module, exports) {
 
 	module.exports = {
-	  ".movie-list-container": {
+	  ".grid-container": {
 	    "flexDirection": "column",
-	    "justifyContent": "flex-start",
-	    "backgroundColor": "#ffffff"
-	  },
-	  ".inner-container": {
-	    "display": "flex",
-	    "flexDirection": "column",
-	    "justifyContent": "flex-start",
-	    "paddingBottom": "20px"
-	  },
-	  ".movie-head": {
-	    "paddingTop": "30px",
-	    "paddingRight": "30px",
-	    "paddingBottom": "22px",
-	    "paddingLeft": "30px",
-	    "display": "flex",
-	    "flexDirection": "row",
-	    "justifyContent": "space-between",
-	    "alignItems": "center"
-	  },
-	  ".slogan": {
-	    "fontSize": "24px"
-	  },
-	  ".more-text": {
-	    "marginRight": "10px",
-	    "fontSize": "24px",
-	    "color": "#1f4ba5"
-	  },
-	  ".more-img": {
-	    "width": "9px",
-	    "height": "16px",
-	    "marginTop": "10px"
-	  },
-	  ".movies-container": {
-	    "display": "flex",
-	    "flexDirection": "row",
-	    "justifyContent": "space-between",
-	    "marginTop": "0px",
-	    "marginRight": "30px",
+	    "columns": 3,
+	    "marginTop": "40px",
+	    "marginRight": "0px",
 	    "marginBottom": "0px",
-	    "marginLeft": "30px"
+	    "marginLeft": "25px"
+	  },
+	  ".content-item": {
+	    "marginBottom": "40px"
+	  },
+	  ".load-more": {
+	    "columnSpan": 3,
+	    "justifyContent": "center",
+	    "paddingTop": "30px",
+	    "paddingRight": "0px",
+	    "paddingBottom": "100px",
+	    "paddingLeft": "0px"
 	  }
 	}
 
 /***/ },
-/* 30 */
-/***/ function(module, exports) {
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(module, exports, $app_require$){'use strict';
 	
@@ -707,174 +648,133 @@
 	    value: true
 	});
 	
-	var _system = $app_require$('@app-module/system.router');
+	var _util = __webpack_require__(12);
 	
-	var _system2 = _interopRequireDefault(_system);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = {
-	    props: ['topic'],
-	    routeMore: function routeMore() {
-	        _system2.default.push({
-	            uri: '/More',
-	            params: { category: this.topic.categoryTitle }
-	        });
-	    }
-	};}
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	module.exports = {
-	  "type": "div",
-	  "attr": {},
-	  "classList": [
-	    "my-container"
-	  ],
-	  "children": [
-	    {
-	      "type": "div",
-	      "attr": {},
-	      "classList": [
-	        "movies-template"
-	      ],
-	      "children": [
-	        {
-	          "type": "movie-list",
-	          "attr": {
-	            "topic": function () {return this.inTheaters}
-	          }
-	        }
-	      ]
-	    },
-	    {
-	      "type": "div",
-	      "attr": {},
-	      "classList": [
-	        "movies-template"
-	      ],
-	      "children": [
-	        {
-	          "type": "movie-list",
-	          "attr": {
-	            "topic": function () {return this.comingSoon}
-	          }
-	        }
-	      ]
-	    },
-	    {
-	      "type": "div",
-	      "attr": {},
-	      "classList": [
-	        "movies-template"
-	      ],
-	      "children": [
-	        {
-	          "type": "movie-list",
-	          "attr": {
-	            "topic": function () {return this.top250}
-	          }
-	        }
-	      ]
-	    }
-	  ]
-	}
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	module.exports = {
-	  ".my-container": {
-	    "display": "flex",
-	    "flexDirection": "column",
-	    "justifyContent": "space-between",
-	    "backgroundColor": "#f2f2f2"
-	  },
-	  ".movies-template": {
-	    "flexDirection": "column",
-	    "justifyContent": "flex-start",
-	    "marginBottom": "30px"
-	  }
-	}
-
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module, exports, $app_require$){'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _system = $app_require$('@app-module/system.fetch');
-	
-	var _system2 = _interopRequireDefault(_system);
+	var _util2 = _interopRequireDefault(_util);
 	
 	var _Movie = __webpack_require__(11);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
-	  data: {
-	    inTheaters: {},
-	    comingSoon: {},
-	    top250: {}
-	  },
+	    props: ['requestUrl'],
+	    data: {
+	        movieList: {},
+	        totalCount: 0,
+	        isEmpty: true,
+	        hasMore: true,
+	        tip: '加载中...'
+	    },
+	    onInit: function onInit() {
+	        var dataUrl = this.requestUrl + "?start=0&count=18";
+	        _util2.default.http(dataUrl, this.processDoubanData.bind(this));
+	    },
 	
-	  onInit: function onInit() {
-	    var inTheatersUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/in_theaters?start=0&count=3";
-	    var comingSoonUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/coming_soon?start=0&count=3";
-	    var top250Url = this.$app.$def.gData.dbBaseUrl + "/v2/movie/top250?start=0&count=3";
 	
-	    this.getMovieListData(inTheatersUrl, "inTheaters", "正在热映");
-	    this.getMovieListData(comingSoonUrl, "comingSoon", "即将上映");
-	    this.getMovieListData(top250Url, "top250", "豆瓣Top250");
-	  },
+	    processDoubanData: function processDoubanData(moviesDouban) {
+	        if (moviesDouban.subjects.length === 0) {
+	            this.hasMore = false;
+	            this.tip = '已经木有了 T.T';
+	        }
+	        var movies = [];
+	        for (var idx in moviesDouban.subjects) {
+	            var subject = moviesDouban.subjects[idx];
+	            var title = subject.title;
+	            if (title.length >= 6) {
+	                title = title.substring(0, 6) + "...";
+	            }
+	            var temp = {
+	                stars: new _Movie.Movie().convertToStarsArray(subject.rating.stars),
+	                title: title,
+	                average: subject.rating.average,
+	                coverageUrl: subject.images.large,
+	                movieId: subject.id
+	            };
+	            movies.push(temp);
+	        }
+	        var totalMovies = {};
 	
-	  getMovieListData: function getMovieListData(url, settedKey, categoryTitle) {
-	    var that = this;
-	    _system2.default.fetch({
-	      url: url,
-	      method: 'GET',
-	      success: function success(data) {
-	        that.processDoubanData(JSON.parse(data.data), settedKey, categoryTitle);
-	      },
-	      fail: function fail(data, code) {
-	        console.log("handling fail, code=" + code);
-	      }
-	    });
-	  },
+	        if (!this.isEmpty) {
+	            totalMovies = this.movieList.concat(movies);
+	        } else {
+	            totalMovies = movies;
+	            this.isEmpty = false;
+	        }
+	        this.movieList = totalMovies;
+	        this.totalCount += 18;
+	    },
 	
-	  processDoubanData: function processDoubanData(moviesDouban, settedKey, categoryTitle) {
-	    var movies = [];
-	    for (var idx in moviesDouban.subjects) {
-	      var subject = moviesDouban.subjects[idx];
-	      var title = subject.title;
-	      if (title.length >= 6) {
-	        title = title.substring(0, 6) + "...";
-	      }
-	      var temp = {
-	        stars: new _Movie.Movie().convertToStarsArray(subject.rating.stars),
-	        title: title,
-	        average: subject.rating.average,
-	        coverageUrl: subject.images.large,
-	        movieId: subject.id
-	      };
-	      movies.push(temp);
+	    loadMoreData: function loadMoreData() {
+	        if (this.hasMore) {
+	            var nextUrl = this.requestUrl + "?start=" + this.totalCount + "&count=18";
+	            _util2.default.http(nextUrl, this.processDoubanData.bind(this));
+	        } else {
+	            this.tip = '木有了你还往下拉.. ←_←';
+	        }
 	    }
-	    var readyData = {
-	      categoryTitle: categoryTitle,
-	      movies: movies
-	    };
-	    this.$set(settedKey, readyData);
+	};}
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "type": "movie-grid",
+	  "attr": {
+	    "requestUrl": function () {return this.requestUrl}
 	  }
+	}
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	module.exports = {}
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module, exports, $app_require$){'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _util = __webpack_require__(12);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
+	var _Movie = __webpack_require__(11);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	    props: ['category'],
+	    data: {
+	        movies: {},
+	        requestUrl: ""
+	    },
+	
+	    onInit: function onInit() {
+	        var category = this.category;
+	        this.$page.setTitleBar({ text: category });
+	        var dataUrl = "";
+	        switch (category) {
+	            case "正在热映":
+	                dataUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/in_theaters";
+	                break;
+	            case "即将上映":
+	                dataUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/coming_soon";
+	                break;
+	            case "豆瓣Top250":
+	                dataUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/top250";
+	                break;
+	        }
+	        this.requestUrl = dataUrl;
+	    }
 	};
 	
 	
@@ -882,23 +782,23 @@
 	var accessors = ['public', 'protected', 'private'];
 	
 	if (moduleOwn.data && accessors.some(function (acc) {
-	  return moduleOwn[acc];
+	    return moduleOwn[acc];
 	})) {
-	  throw new Error('页面VM对象中的属性data不可与"' + accessors.join(',') + '"同时存在，请使用private替换data名称');
+	    throw new Error('页面VM对象中的属性data不可与"' + accessors.join(',') + '"同时存在，请使用private替换data名称');
 	} else if (!moduleOwn.data) {
-	  moduleOwn.data = {};
-	  moduleOwn._descriptor = {};
-	  accessors.forEach(function (acc) {
-	    var accType = _typeof(moduleOwn[acc]);
-	    if (accType === 'object') {
-	      moduleOwn.data = Object.assign(moduleOwn.data, moduleOwn[acc]);
-	      for (var name in moduleOwn[acc]) {
-	        moduleOwn._descriptor[name] = { access: acc };
-	      }
-	    } else if (accType === 'function') {
-	      console.warn('页面VM对象中的属性' + acc + '的值不能是函数，请使用对象');
-	    }
-	  });
+	    moduleOwn.data = {};
+	    moduleOwn._descriptor = {};
+	    accessors.forEach(function (acc) {
+	        var accType = _typeof(moduleOwn[acc]);
+	        if (accType === 'object') {
+	            moduleOwn.data = Object.assign(moduleOwn.data, moduleOwn[acc]);
+	            for (var name in moduleOwn[acc]) {
+	                moduleOwn._descriptor[name] = { access: acc };
+	            }
+	        } else if (accType === 'function') {
+	            console.warn('页面VM对象中的属性' + acc + '的值不能是函数，请使用对象');
+	        }
+	    });
 	}}
 
 /***/ }
