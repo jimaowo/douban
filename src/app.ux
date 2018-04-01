@@ -9,8 +9,7 @@
     createShortcut: util.createShortcut,
 
     gData: {
-      dbBaseUrl: 'https://douban.uieee.com'
-      // dbBaseUrl: 'https://api.douban.com'
+      dbBaseUrl: 'https://api.douban.com'
     },
   }
 </script>
