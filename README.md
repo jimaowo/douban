@@ -1,7 +1,6 @@
 # 豆瓣电影快应用
-## 目前效果图
-![image](https://github.com/jimaowo/douban/blob/master/kyydb1.png)
-![image](https://github.com/jimaowo/douban/blob/master/kyydb2.png)
+## 当前效果演示
+![image](https://github.com/jimaowo/douban/blob/master/demo.gif)
 
 
 ### 项目还在继续更新，目前已开发的功能：
