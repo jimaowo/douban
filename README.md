@@ -18,4 +18,6 @@
 
 ## 另外，我自己搭了个专门交流快应用的小网站，欢迎来吐槽~
 - [鸡毛窝](http://www.jimaowo.com)
-- http://www.jimaowo.com
+- 地址：http://www.jimaowo.com
+- 快应用官方论坛貌似不支持搜索，本站支持搜索喔~~
+- 正在收录快应用的开发问题。。。
