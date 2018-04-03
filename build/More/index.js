@@ -663,18 +663,25 @@
 	        totalCount: 0,
 	        isEmpty: true,
 	        hasMore: true,
-	        tip: '加载中...'
+	        tip: '加载中...',
+	        symbol: '?'
 	    },
 	    onInit: function onInit() {
-	        var dataUrl = this.requestUrl + "?start=0&count=18";
-	        _util2.default.http(dataUrl, this.processDoubanData.bind(this));
+	        var requestUrl = this.requestUrl;
+	        if (requestUrl !== '') {
+	            if (requestUrl.indexOf("?") != -1) {
+	                this.symbol = '&';
+	            }
+	            var dataUrl = this.requestUrl + this.symbol + "start=0&count=18";
+	            _util2.default.http(dataUrl, this.processDoubanData.bind(this));
+	        }
 	    },
 	
 	
 	    processDoubanData: function processDoubanData(moviesDouban) {
-	        if (moviesDouban.subjects.length === 0) {
+	        if (moviesDouban.subjects.length < 18) {
 	            this.hasMore = false;
-	            this.tip = '已经木有了 T.T';
+	            this.tip = '没有更多了 T.T';
 	        }
 	        var movies = [];
 	        for (var idx in moviesDouban.subjects) {
@@ -706,10 +713,10 @@
 	
 	    loadMoreData: function loadMoreData() {
 	        if (this.hasMore) {
-	            var nextUrl = this.requestUrl + "?start=" + this.totalCount + "&count=18";
+	            var nextUrl = this.requestUrl + this.symbol + "start=" + this.totalCount + "&count=18";
 	            _util2.default.http(nextUrl, this.processDoubanData.bind(this));
 	        } else {
-	            this.tip = '木有了你还往下拉.. ←_←';
+	            this.tip = '没有了你还往下拉.. ←_←';
 	        }
 	    }
 	};}

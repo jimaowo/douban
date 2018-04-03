@@ -48,7 +48,7 @@
     .more-text {
         margin-right: 10px;
         font-size: 24px;
-        color: #1f4ba5;
+        color: #35AA53;
     }
 
     .more-img {

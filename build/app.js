@@ -181,7 +181,7 @@
 	    dbBaseUrl: 'https://api.douban.com'
 	  }
 	};
-	(exports.default || module.exports).manifest = {"package":"com.jimaowo.demo","name":"JmwDy","versionName":"1.0.0","versionCode":"1","minPlatformVersion":"101","icon":"/Common/logo.png","features":[{"name":"system.prompt"},{"name":"system.router"},{"name":"system.fetch"},{"name":"system.shortcut"}],"permissions":[{"origin":"*"}],"config":{"logLevel":"debug"},"router":{"entry":"Home","pages":{"Home":{"component":"index"},"Topic":{"component":"index"},"Detail":{"component":"index"},"More":{"component":"index"},"About":{"component":"index"}}},"display":{"titleBarBackgroundColor":"#f2f2f2","titleBarTextColor":"#414141","menu":true,"pages":{"Home":{"titleBarText":"鸡毛窝","menu":false},"Topic":{"titleBarText":"电影专题"},"Detail":{"titleBarText":"电影详情"},"About":{"menu":false}}}};
+	(exports.default || module.exports).manifest = {"package":"com.jimaowo.demo","name":"JmwDy","versionName":"1.0.0","versionCode":"1","minPlatformVersion":"101","icon":"/Common/images/logo.png","features":[{"name":"system.prompt"},{"name":"system.router"},{"name":"system.fetch"},{"name":"system.shortcut"}],"permissions":[{"origin":"*"}],"config":{"logLevel":"debug"},"router":{"entry":"Home","pages":{"Home":{"component":"index"},"Topic":{"component":"index"},"Detail":{"component":"index"},"More":{"component":"index"},"About":{"component":"index"}}},"display":{"titleBarBackgroundColor":"#35AA53","titleBarTextColor":"#ffffff","menu":true,"pages":{"Home":{"titleBarText":"鸡毛窝","menu":false},"Topic":{"titleBarText":"电影专题"},"Detail":{"titleBarText":"电影详情"},"About":{"menu":false}}}};
 	}
 
 /***/ }
@@ -194,7 +194,7 @@
   else {
     window.createAppHandler = createAppHandler
     // H5注入manifest以获取features
-    global.manifest = {"package":"com.jimaowo.demo","name":"JmwDy","versionName":"1.0.0","versionCode":"1","minPlatformVersion":"101","icon":"/Common/logo.png","features":[{"name":"system.prompt"},{"name":"system.router"},{"name":"system.fetch"},{"name":"system.shortcut"}],"permissions":[{"origin":"*"}],"config":{"logLevel":"debug"},"router":{"entry":"Home","pages":{"Home":{"component":"index"},"Topic":{"component":"index"},"Detail":{"component":"index"},"More":{"component":"index"},"About":{"component":"index"}}},"display":{"titleBarBackgroundColor":"#f2f2f2","titleBarTextColor":"#414141","menu":true,"pages":{"Home":{"titleBarText":"鸡毛窝","menu":false},"Topic":{"titleBarText":"电影专题"},"Detail":{"titleBarText":"电影详情"},"About":{"menu":false}}}};
+    global.manifest = {"package":"com.jimaowo.demo","name":"JmwDy","versionName":"1.0.0","versionCode":"1","minPlatformVersion":"101","icon":"/Common/images/logo.png","features":[{"name":"system.prompt"},{"name":"system.router"},{"name":"system.fetch"},{"name":"system.shortcut"}],"permissions":[{"origin":"*"}],"config":{"logLevel":"debug"},"router":{"entry":"Home","pages":{"Home":{"component":"index"},"Topic":{"component":"index"},"Detail":{"component":"index"},"More":{"component":"index"},"About":{"component":"index"}}},"display":{"titleBarBackgroundColor":"#35AA53","titleBarTextColor":"#ffffff","menu":true,"pages":{"Home":{"titleBarText":"鸡毛窝","menu":false},"Topic":{"titleBarText":"电影专题"},"Detail":{"titleBarText":"电影详情"},"About":{"menu":false}}}};
   }
 })();
 //# sourceMappingURL=app.js.map

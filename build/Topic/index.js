@@ -48,6 +48,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(27)
+	__webpack_require__(16)
 	var $app_template$ = __webpack_require__(31)
 	var $app_style$ = __webpack_require__(32)
 	var $app_script$ = __webpack_require__(33)
@@ -420,7 +421,25 @@
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */,
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(17)
+	var $app_template$ = __webpack_require__(21)
+	var $app_style$ = __webpack_require__(22)
+	var $app_script$ = __webpack_require__(23)
+	
+	$app_define$('@app-component/movie-grid', [], function($app_require$, $app_exports$, $app_module$){
+	     $app_script$($app_module$, $app_exports$, $app_require$)
+	     if ($app_exports$.__esModule && $app_exports$.default) {
+	            $app_module$.exports = $app_exports$.default
+	        }
+	     $app_module$.exports.template = $app_template$
+	     $app_module$.exports.style = $app_style$
+	})
+
+
+/***/ },
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -530,9 +549,180 @@
 	};}
 
 /***/ },
-/* 21 */,
-/* 22 */,
-/* 23 */,
+/* 21 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "type": "list",
+	  "attr": {},
+	  "classList": [
+	    "grid-container"
+	  ],
+	  "events": {
+	    "scrollbottom": "loadMoreData"
+	  },
+	  "children": [
+	    {
+	      "type": "block",
+	      "attr": {},
+	      "repeat": function () {return this.movieList},
+	      "children": [
+	        {
+	          "type": "list-item",
+	          "attr": {
+	            "type": "movie"
+	          },
+	          "classList": [
+	            "content-item"
+	          ],
+	          "children": [
+	            {
+	              "type": "movie-box",
+	              "attr": {
+	                "movie": function () {return this.$item}
+	              }
+	            }
+	          ]
+	        }
+	      ]
+	    },
+	    {
+	      "type": "list-item",
+	      "attr": {
+	        "type": "loadMore"
+	      },
+	      "classList": [
+	        "load-more"
+	      ],
+	      "children": [
+	        {
+	          "type": "progress",
+	          "attr": {
+	            "type": "circular"
+	          },
+	          "shown": function () {return this.hasMore}
+	        },
+	        {
+	          "type": "text",
+	          "attr": {
+	            "value": function () {return this.tip}
+	          }
+	        }
+	      ]
+	    }
+	  ]
+	}
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  ".grid-container": {
+	    "flexDirection": "column",
+	    "columns": 3,
+	    "marginTop": "40px",
+	    "marginRight": "0px",
+	    "marginBottom": "0px",
+	    "marginLeft": "25px"
+	  },
+	  ".content-item": {
+	    "marginBottom": "40px"
+	  },
+	  ".load-more": {
+	    "columnSpan": 3,
+	    "justifyContent": "center",
+	    "paddingTop": "30px",
+	    "paddingRight": "0px",
+	    "paddingBottom": "100px",
+	    "paddingLeft": "0px"
+	  }
+	}
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module, exports, $app_require$){'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _util = __webpack_require__(12);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
+	var _Movie = __webpack_require__(11);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	    props: ['requestUrl'],
+	    data: {
+	        movieList: {},
+	        totalCount: 0,
+	        isEmpty: true,
+	        hasMore: true,
+	        tip: '加载中...',
+	        symbol: '?'
+	    },
+	    onInit: function onInit() {
+	        var requestUrl = this.requestUrl;
+	        if (requestUrl !== '') {
+	            if (requestUrl.indexOf("?") != -1) {
+	                this.symbol = '&';
+	            }
+	            var dataUrl = this.requestUrl + this.symbol + "start=0&count=18";
+	            _util2.default.http(dataUrl, this.processDoubanData.bind(this));
+	        }
+	    },
+	
+	
+	    processDoubanData: function processDoubanData(moviesDouban) {
+	        if (moviesDouban.subjects.length < 18) {
+	            this.hasMore = false;
+	            this.tip = '没有更多了 T.T';
+	        }
+	        var movies = [];
+	        for (var idx in moviesDouban.subjects) {
+	            var subject = moviesDouban.subjects[idx];
+	            var title = subject.title;
+	            if (title.length >= 6) {
+	                title = title.substring(0, 6) + "...";
+	            }
+	            var temp = {
+	                stars: new _Movie.Movie().convertToStarsArray(subject.rating.stars),
+	                title: title,
+	                average: subject.rating.average,
+	                coverageUrl: subject.images.large,
+	                movieId: subject.id
+	            };
+	            movies.push(temp);
+	        }
+	        var totalMovies = {};
+	
+	        if (!this.isEmpty) {
+	            totalMovies = this.movieList.concat(movies);
+	        } else {
+	            totalMovies = movies;
+	            this.isEmpty = false;
+	        }
+	        this.movieList = totalMovies;
+	        this.totalCount += 18;
+	    },
+	
+	    loadMoreData: function loadMoreData() {
+	        if (this.hasMore) {
+	            var nextUrl = this.requestUrl + this.symbol + "start=" + this.totalCount + "&count=18";
+	            _util2.default.http(nextUrl, this.processDoubanData.bind(this));
+	        } else {
+	            this.tip = '没有了你还往下拉.. ←_←';
+	        }
+	    }
+	};}
+
+/***/ },
 /* 24 */,
 /* 25 */,
 /* 26 */,
@@ -679,7 +869,7 @@
 	  ".more-text": {
 	    "marginRight": "10px",
 	    "fontSize": "24px",
-	    "color": "#1f4ba5"
+	    "color": "#35AA53"
 	  },
 	  ".more-img": {
 	    "width": "9px",
@@ -731,53 +921,128 @@
 	  "type": "div",
 	  "attr": {},
 	  "classList": [
-	    "my-container"
+	    "container"
 	  ],
 	  "children": [
 	    {
 	      "type": "div",
 	      "attr": {},
 	      "classList": [
-	        "movies-template"
+	        "search"
 	      ],
 	      "children": [
 	        {
-	          "type": "movie-list",
+	          "type": "image",
 	          "attr": {
-	            "topic": function () {return this.inTheaters}
+	            "src": "/Common/images/icon/search.png"
+	          },
+	          "classList": [
+	            "search-img"
+	          ]
+	        },
+	        {
+	          "type": "input",
+	          "attr": {
+	            "id": "search-text",
+	            "type": "text",
+	            "placeholder": "搜索电影、影人..."
+	          },
+	          "id": "search-text",
+	          "events": {
+	            "focus": "searchFocus",
+	            "change": "setSearchText"
+	          }
+	        },
+	        {
+	          "type": "image",
+	          "attr": {
+	            "src": "/Common/images/icon/x.png"
+	          },
+	          "classList": [
+	            "xx-img"
+	          ],
+	          "events": {
+	            "click": "cancelSearch"
+	          },
+	          "shown": function () {return this.searchPanelShow}
+	        },
+	        {
+	          "type": "a",
+	          "attr": {
+	            "show": function () {return this.canSearch},
+	            "value": "搜索"
+	          },
+	          "classList": [
+	            "search-btn"
+	          ],
+	          "events": {
+	            "click": "doSearch"
 	          }
 	        }
 	      ]
 	    },
 	    {
 	      "type": "div",
-	      "attr": {},
+	      "attr": {
+	        "show": function () {return this.topicShow}
+	      },
 	      "classList": [
-	        "movies-template"
+	        "topic-list"
 	      ],
 	      "children": [
 	        {
-	          "type": "movie-list",
-	          "attr": {
-	            "topic": function () {return this.comingSoon}
-	          }
+	          "type": "div",
+	          "attr": {},
+	          "classList": [
+	            "movies-template"
+	          ],
+	          "children": [
+	            {
+	              "type": "movie-list",
+	              "attr": {
+	                "topic": function () {return this.inTheaters}
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "div",
+	          "attr": {},
+	          "classList": [
+	            "movies-template"
+	          ],
+	          "children": [
+	            {
+	              "type": "movie-list",
+	              "attr": {
+	                "topic": function () {return this.comingSoon}
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "div",
+	          "attr": {},
+	          "classList": [
+	            "movies-template"
+	          ],
+	          "children": [
+	            {
+	              "type": "movie-list",
+	              "attr": {
+	                "topic": function () {return this.top250}
+	              }
+	            }
+	          ]
 	        }
 	      ]
 	    },
 	    {
-	      "type": "div",
-	      "attr": {},
-	      "classList": [
-	        "movies-template"
-	      ],
-	      "children": [
-	        {
-	          "type": "movie-list",
-	          "attr": {
-	            "topic": function () {return this.top250}
-	          }
-	        }
-	      ]
+	      "type": "movie-grid",
+	      "attr": {
+	        "requestUrl": function () {return this.searchUrl}
+	      },
+	      "shown": function () {return this.searchPanelShow}
 	    }
 	  ]
 	}
@@ -787,7 +1052,66 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-	  ".my-container": {
+	  ".container": {
+	    "display": "flex",
+	    "flexDirection": "column"
+	  },
+	  ".search": {
+	    "backgroundColor": "#f2f2f2",
+	    "height": "80px",
+	    "width": "100%",
+	    "display": "flex",
+	    "flexDirection": "row",
+	    "justifyContent": "space-between",
+	    "alignItems": "center"
+	  },
+	  ".search-btn": {
+	    "width": "80px",
+	    "height": "40px",
+	    "marginRight": "30px",
+	    "borderRadius": "5px",
+	    "backgroundColor": "#eeeeee",
+	    "textAlign": "center",
+	    "fontSize": "28px"
+	  },
+	  ".search-img": {
+	    "marginLeft": "30px"
+	  },
+	  ".xx-img": {
+	    "height": "30px",
+	    "width": "30px",
+	    "marginRight": "30px"
+	  },
+	  ".search input": {
+	    "height": "100%",
+	    "width": "600px",
+	    "marginLeft": "20px",
+	    "fontSize": "28px",
+	    "_meta": {
+	      "ruleDef": [
+	        {
+	          "t": "a",
+	          "n": "class",
+	          "i": false,
+	          "a": "element",
+	          "v": "search"
+	        },
+	        {
+	          "t": "d"
+	        },
+	        {
+	          "t": "t",
+	          "n": "input"
+	        }
+	      ]
+	    }
+	  },
+	  ".placeholder": {
+	    "fontSize": "14px",
+	    "color": "#d1d1d1",
+	    "marginLeft": "20px"
+	  },
+	  ".topic-list": {
 	    "display": "flex",
 	    "flexDirection": "column",
 	    "justifyContent": "space-between",
@@ -824,7 +1148,12 @@
 	  data: {
 	    inTheaters: {},
 	    comingSoon: {},
-	    top250: {}
+	    top250: {},
+	    searchUrl: '',
+	    searchText: '',
+	    topicShow: true,
+	    searchPanelShow: false,
+	    canSearch: true
 	  },
 	
 	  onInit: function onInit() {
@@ -873,6 +1202,23 @@
 	      movies: movies
 	    };
 	    this.$set(settedKey, readyData);
+	  },
+	
+	  setSearchText: function setSearchText(e) {
+	    this.searchText = e.text;
+	  },
+	
+	  doSearch: function doSearch(e) {
+	    this.topicShow = false;
+	    this.searchPanelShow = true;
+	    this.canSearch = false;
+	    this.searchUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/search?q=" + this.searchText;
+	  },
+	
+	  cancelSearch: function cancelSearch() {
+	    this.topicShow = true;
+	    this.searchPanelShow = false;
+	    this.canSearch = true;
 	  }
 	
 	};

@@ -1,5 +1,4 @@
 <template>
-  <!-- template里只能有一个根节点 -->
   <div class="demo-page">
     <text class="title">欢迎光临!</text>
     <input class="btn" type="button" value="看电影！" onclick="routeMovie">
@@ -24,7 +23,7 @@
     height: 86px;
     margin-top: 75px;
     border-radius: 43px;
-    background-color: #09ba07;
+    background-color: #35AA53;
     font-size: 30px;
     color: #ffffff;
   }

@@ -1,23 +1,84 @@
 <import name="movie-list" src="../Common/component/movie-list.ux"></import>
+<import name="movie-grid" src="../Common/component/movie-grid.ux"></import>
 
 <template>
-  <div class="my-container">
-    <div class="movies-template">
-      <movie-list topic="{{inTheaters}}"></movie-list>
+  <div class="container">
+    <div class="search">
+      <image class="search-img" src="/Common/images/icon/search.png"></image>
+      <input id="search-text" type="text" placeholder="搜索电影、影人..." onfocus="searchFocus" onchange="setSearchText" />
+      <image class="xx-img" src="/Common/images/icon/x.png" onclick="cancelSearch" if="{{searchPanelShow}}"></image>
+      <a show="{{canSearch}}" class="search-btn" onclick="doSearch">搜索</a>
     </div>
-    <div class="movies-template">
-      <movie-list topic="{{comingSoon}}"></movie-list>
+    <div class="topic-list" show="{{topicShow}}">
+      <div class="movies-template">
+        <movie-list topic="{{inTheaters}}"></movie-list>
+      </div>
+      <div class="movies-template">
+        <movie-list topic="{{comingSoon}}"></movie-list>
+      </div>
+      <div class="movies-template">
+        <movie-list topic="{{top250}}"></movie-list>
+      </div>
     </div>
-    <div class="movies-template">
-      <movie-list topic="{{top250}}"></movie-list>
-    </div>
-
+    <movie-grid if="{{searchPanelShow}}" request-url="{{searchUrl}}"></movie-grid>
   </div>
-
 </template>
 
 <style>
- .my-container {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* .search-panel {
+    display: flex;
+    flex-direction: column;
+  } */
+
+  .search {
+    background-color: #f2f2f2;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search-btn {
+    width: 80px;
+    height: 40px;
+    margin-right: 30px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    text-align: center;
+    font-size: 28px;
+  }
+
+  .search-img {
+    margin-left: 30px;
+  }
+
+  .xx-img {
+    height: 30px;
+    width: 30px;
+    margin-right: 30px;
+  }
+
+  .search input {
+    height: 100%;
+    width: 600px;
+    margin-left: 20px;
+    font-size: 28px;
+  }
+
+  .placeholder {
+    font-size: 14px;
+    color: #d1d1d1;
+    margin-left: 20px;
+  }
+
+  .topic-list {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -40,6 +101,11 @@
       inTheaters: {},
       comingSoon: {},
       top250: {},
+      searchUrl: '',
+      searchText: '',
+      topicShow: true,
+      searchPanelShow: false,
+      canSearch: true,
     },
 
     onInit() {
@@ -66,8 +132,8 @@
         }
       })
     },
-    
-    //重组电影数据
+
+    //重组专题电影数据
     processDoubanData: function (moviesDouban, settedKey, categoryTitle) {
       var movies = [];
       for (var idx in moviesDouban.subjects) {
@@ -90,7 +156,26 @@
         movies: movies
       }
       this.$set(settedKey, readyData)
-    }
+    },
+
+    //获取搜索文本
+    //不知道什么原因，直接取input的值取不到，目前只能用onchange来取？
+    setSearchText: function(e) {
+      this.searchText = e.text;
+    },
+    //执行搜索
+    doSearch: function (e) {
+      this.topicShow = false;
+      this.searchPanelShow = true;
+      this.canSearch = false;
+      this.searchUrl = this.$app.$def.gData.dbBaseUrl + "/v2/movie/search?q=" + this.searchText;
+    },
+    //取消搜索
+    cancelSearch: function () {
+      this.topicShow = true;
+      this.searchPanelShow = false;
+      this.canSearch = true;
+    },
 
   }
 </script>

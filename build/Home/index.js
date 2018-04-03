@@ -131,7 +131,7 @@
 	    "height": "86px",
 	    "marginTop": "75px",
 	    "borderRadius": "43px",
-	    "backgroundColor": "#09ba07",
+	    "backgroundColor": "#35AA53",
 	    "fontSize": "30px",
 	    "color": "#ffffff"
 	  },
