@@ -9,6 +9,7 @@
     { "name": "system.prompt" },
     { "name": "system.router" },
     { "name": "system.fetch" },
+    { "name": "system.webview" },
     { "name": "system.shortcut" }
   ],
   "permissions": [

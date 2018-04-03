@@ -101,12 +101,14 @@
 	    {
 	      "type": "a",
 	      "attr": {
-	        "href": "http://www.jimaowo.com",
 	        "value": "快应用开发交流"
 	      },
 	      "classList": [
 	        "btn-jmw"
-	      ]
+	      ],
+	      "events": {
+	        "click": "routeJmw"
+	      }
 	    }
 	  ]
 	}
@@ -164,6 +166,10 @@
 	
 	var _system2 = _interopRequireDefault(_system);
 	
+	var _system3 = $app_require$('@app-module/system.webview');
+	
+	var _system4 = _interopRequireDefault(_system3);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
@@ -173,6 +179,11 @@
 	  routeMovie: function routeMovie() {
 	    _system2.default.push({
 	      uri: '/Topic'
+	    });
+	  },
+	  routeJmw: function routeJmw() {
+	    _system4.default.loadUrl({
+	      url: 'http://www.jimaowo.com'
 	    });
 	  }
 	};

@@ -2,7 +2,7 @@
   <div class="demo-page">
     <text class="title">欢迎光临!</text>
     <input class="btn" type="button" value="看电影！" onclick="routeMovie">
-    <a class="btn-jmw" href="http://www.jimaowo.com">快应用开发交流</a>
+    <a class="btn-jmw" onclick="routeJmw">快应用开发交流</a>
   </div>
 </template>
 
@@ -27,6 +27,7 @@
     font-size: 30px;
     color: #ffffff;
   }
+
   .btn-jmw {
     text-align: center;
     width: 550px;
@@ -41,6 +42,7 @@
 
 <script>
   import router from '@system.router'
+  import webview from '@system.webview'
 
   export default {
     data: {
@@ -51,6 +53,12 @@
       router.push({
         uri: '/Topic'
       })
+    },
+    routeJmw() {
+      webview.loadUrl({
+        url: 'http://www.jimaowo.com'
+      })
     }
+
   }
 </script>
