@@ -1,6 +1,6 @@
 # 豆瓣电影快应用
 ## 当前效果演示
-![image](http://ox2inf262.bkt.clouddn.com/20180404_212438.gif)
+![image](https://github.com/jimaowo/douban/blob/master/demo.gif)
 
 
 ### 项目还在继续更新，目前已开发的功能：
