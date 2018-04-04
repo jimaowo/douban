@@ -6,10 +6,32 @@ class Movie {
 
     getMovieData(cb) {
         this.cb = cb;
-        util.http(this.url, this.processDoubanData.bind(this));
+        util.http(this.url, this.processDetailData.bind(this));
     }
 
-    processDoubanData(data) {
+    //处理[电影列表]数据
+    processListData(moviesDouban) {
+        var movies = [];
+        for (var idx in moviesDouban.subjects) {
+            var subject = moviesDouban.subjects[idx];
+            var title = subject.title;
+            if (title.length >= 6) {
+                title = title.substring(0, 6) + "...";
+            }
+            var temp = {
+                stars: this.convertToStarsArray(subject.rating.stars),
+                title: title,
+                average: subject.rating.average,
+                coverageUrl: subject.images.large,
+                movieId: subject.id
+            }
+            movies.push(temp)
+        }
+        return movies;
+    }
+
+    //处理[电影详情]数据
+    processDetailData(data) {
         if (!data) {
             return;
         }

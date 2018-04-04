@@ -5,7 +5,7 @@
   <div class="container">
     <div class="search">
       <image class="search-img" src="/Common/images/icon/search.png"></image>
-      <input id="search-text" type="text" placeholder="搜索电影、影人..." onfocus="searchFocus" onchange="setSearchText" />
+      <input id="search-text" type="text" placeholder="搜索电影、影人..." onblur="doSearch" onchange="setSearchText" />
       <image class="xx-img" src="/Common/images/icon/x.png" onclick="cancelSearch" if="{{searchPanelShow}}"></image>
       <a show="{{canSearch}}" class="search-btn" onclick="doSearch">搜索</a>
     </div>
@@ -135,22 +135,7 @@
 
     //重组专题电影数据
     processDoubanData: function (moviesDouban, settedKey, categoryTitle) {
-      var movies = [];
-      for (var idx in moviesDouban.subjects) {
-        var subject = moviesDouban.subjects[idx];
-        var title = subject.title;
-        if (title.length >= 6) {
-          title = title.substring(0, 6) + "...";
-        }
-        var temp = {
-          stars: (new Movie()).convertToStarsArray(subject.rating.stars),
-          title: title,
-          average: subject.rating.average,
-          coverageUrl: subject.images.large,
-          movieId: subject.id
-        }
-        movies.push(temp)
-      }
+      var movies = (new Movie()).processListData(moviesDouban);
       var readyData = {
         categoryTitle: categoryTitle,
         movies: movies
@@ -160,7 +145,7 @@
 
     //获取搜索文本
     //不知道什么原因，直接取input的值取不到，目前只能用onchange来取？
-    setSearchText: function(e) {
+    setSearchText: function (e) {
       this.searchText = e.text;
     },
     //执行搜索

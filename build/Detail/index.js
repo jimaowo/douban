@@ -630,11 +630,38 @@
 	        key: "getMovieData",
 	        value: function getMovieData(cb) {
 	            this.cb = cb;
-	            _util2.default.http(this.url, this.processDoubanData.bind(this));
+	            _util2.default.http(this.url, this.processDetailData.bind(this));
 	        }
+	
+	        //处理[电影列表]数据
+	
 	    }, {
-	        key: "processDoubanData",
-	        value: function processDoubanData(data) {
+	        key: "processListData",
+	        value: function processListData(moviesDouban) {
+	            var movies = [];
+	            for (var idx in moviesDouban.subjects) {
+	                var subject = moviesDouban.subjects[idx];
+	                var title = subject.title;
+	                if (title.length >= 6) {
+	                    title = title.substring(0, 6) + "...";
+	                }
+	                var temp = {
+	                    stars: this.convertToStarsArray(subject.rating.stars),
+	                    title: title,
+	                    average: subject.rating.average,
+	                    coverageUrl: subject.images.large,
+	                    movieId: subject.id
+	                };
+	                movies.push(temp);
+	            }
+	            return movies;
+	        }
+	
+	        //处理[电影详情]数据
+	
+	    }, {
+	        key: "processDetailData",
+	        value: function processDetailData(data) {
 	            if (!data) {
 	                return;
 	            }
