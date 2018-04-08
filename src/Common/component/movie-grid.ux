@@ -67,24 +67,9 @@
                 this.hasMore = false;
                 this.tip = '没有更多了 T.T';
             }
-            var movies = [];
-            for (var idx in moviesDouban.subjects) {
-                var subject = moviesDouban.subjects[idx];
-                var title = subject.title;
-                if (title.length >= 6) {
-                    title = title.substring(0, 6) + "...";
-                }
-                var temp = {
-                    stars: (new Movie()).convertToStarsArray(subject.rating.stars),
-                    title: title,
-                    average: subject.rating.average,
-                    coverageUrl: subject.images.large,
-                    movieId: subject.id
-                }
-                movies.push(temp)
-            }
-            var totalMovies = {}
+            var movies = (new Movie()).processListData(moviesDouban);
 
+            var totalMovies = {}
             //如果要绑定新加载的数据，那么需要同旧有的数据合并在一起
             if (!this.isEmpty) {
                 totalMovies = this.movieList.concat(movies);
