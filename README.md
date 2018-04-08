@@ -6,8 +6,10 @@
 ### 使用说明：
 1. 首先你得有快应用基本的开发环境吧...没的话参考我这篇文章->[从零开始，快速创建第一个快应用](http://www.jimaowo.com/article/1)
 2. Clone下来代码，打开命令行工具，进入项目所在目录，执行 `npm install`
-3. 然后再输入 `npm run build` 或者 输入 `npm run watch` ，回车执行。(出现报错的话先执行一下 `hap update --force`，再build)
-5. 另外再打开一个命令行窗口 切换到项目目录 输入 `npm run server`
+3. 然后再输入 `npm run build` 或者 输入 `npm run watch` ，回车执行。
+    (出现报错的话先执行一下 `hap update --force`，再build)
+4. 另外再打开一个命令行窗口 切换到项目目录 输入 `npm run server`
+5. 在手机上在线更新,体验一下吧~
 
 
 ### 项目还在继续更新，目前已开发的功能：
