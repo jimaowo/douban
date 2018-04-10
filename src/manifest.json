@@ -44,14 +44,14 @@
     "menu": true,
     "pages": {
       "Home": {
-        "titleBarText": "鸡毛窝",
-        "menu": false
+        "titleBarText": "鸡毛窝"
       },
       "Topic": {
         "titleBarText": "电影专题"
       },
       "Detail": {
-        "titleBarText": "电影详情"
+        "titleBarText": "电影详情",
+        "menu": false
       },
       "About": {
         "menu": false

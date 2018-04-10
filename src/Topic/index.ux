@@ -161,6 +161,10 @@
       this.searchPanelShow = false;
       this.canSearch = true;
     },
+    
+    onMenuPress() {
+      this.$app.showMenu()
+    }
 
   }
 </script>
